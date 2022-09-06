@@ -1,5 +1,6 @@
 using BankAPI.Data;
 using BankAPI.DataBankModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankAPI.Services;
 
@@ -10,33 +11,33 @@ public class TransactionTypeService{
         _context = context;
     }
 
-    public IEnumerable<TransactionType> GetAll(){
-        return _context.TransactionTypes.ToList();
+    public async Task<IEnumerable<TransactionType>> GetAll(){
+        return await _context.TransactionTypes.ToListAsync();
     }
 
-    public TransactionType? GetById(int id){
-        return _context.TransactionTypes.Find(id);
+    public async Task<TransactionType?> GetById(int id){
+        return await _context.TransactionTypes.FindAsync(id);
     }
 
-    public TransactionType Create(TransactionType newTransactionType){
+    public async Task<TransactionType> Create(TransactionType newTransactionType){
         _context.TransactionTypes.Add(newTransactionType);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return newTransactionType;
     }
 
-    public void Update(int id, TransactionType transactionType){
-        var existingTransactionType = GetById(id);
+    public async Task Update(int id, TransactionType transactionType){
+        var existingTransactionType = await GetById(id);
         if(existingTransactionType is not null){
              existingTransactionType.Name = transactionType.Name;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void Delete(int id){
-        var transactionTypeToDelete = GetById(id);
+    public async Task Delete(int id){
+        var transactionTypeToDelete = await GetById(id);
         if(transactionTypeToDelete is not null){
             _context.Remove(id);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

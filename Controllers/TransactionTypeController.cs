@@ -13,54 +13,58 @@ public class TransactionTypeController: ControllerBase{
     }
 
     [HttpGet]
-    public IEnumerable<TransactionType> Get(){
-        return _service.GetAll();
+    public async Task<IEnumerable<TransactionType>> Get(){
+        return await _service.GetAll();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<TransactionType> GetById(int id){
-        var transactionType = _service.GetById(id);
+    public async Task<ActionResult<TransactionType>> GetById(int id){
+        var transactionType = await _service.GetById(id);
 
         if(transactionType is not null){
             return transactionType;
         }
         else{
-            return NotFound();
+            return TransactionTypeNotFound(id);
         }
     }
 
     [HttpPost]
-    public IActionResult Create(TransactionType transactionType){
-        var newTransactionType = _service.Create(transactionType);
+    public async Task<IActionResult> Create(TransactionType transactionType){
+        var newTransactionType = await _service.Create(transactionType);
 
         return CreatedAtAction(nameof(GetById), new{id = transactionType.Id}, transactionType);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int Id, TransactionType transactionType){
-        if( Id != transactionType.Id){
+    public async Task<IActionResult> Update(int id, TransactionType transactionType){
+        if( id != transactionType.Id){
             return BadRequest();
         }
 
-        var transactionTypeToUpdate = _service.GetById(Id);
+        var transactionTypeToUpdate = await _service.GetById(id);
         if(transactionTypeToUpdate is not null){
-            _service.Update(Id, transactionType);
+            await _service.Update(id, transactionType);
             return NoContent();
         }
         else{
-            return NotFound();
+            return TransactionTypeNotFound(id);
         }
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id){
-        var transactionTypeToDelete = _service.GetById(id);
+    public async Task<IActionResult> Delete(int id){
+        var transactionTypeToDelete = await _service.GetById(id);
         if(transactionTypeToDelete is not null){
-            _service.Delete(id);
+            await _service.Delete(id);
             return Ok();
         }
         else{
-            return NotFound();
+            return TransactionTypeNotFound(id);
         }
+    }
+
+    public NotFoundObjectResult TransactionTypeNotFound(int id){
+        return NotFound(new{message = $"El tipo de transacción con {id} no existe."});
     }
 }

@@ -14,54 +14,58 @@ public class AccountTypeController: ControllerBase{
     }
 
     [HttpGet]
-    public IEnumerable<AccountType> Get(){
-        return _service.GetAll();
+    public async Task<IEnumerable<AccountType>> Get(){
+        return await _service.GetAll();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<AccountType> GetById(int id){
-        var accountType = _service.GetById(id);
+    public async Task<ActionResult<AccountType>> GetById(int id){
+        var accountType = await _service.GetById(id);
 
         if(accountType is not null){
             return accountType;
         }
         else{
-            return NotFound();
+            return AccountTypeNotFound(id);
         }
     }
 
     [HttpPost]
-    public IActionResult Create(AccountType accountType){
-        var newAccountType = _service.Create(accountType);
+    public async Task<IActionResult> Create(AccountType accountType){
+        var newAccountType = await _service.Create(accountType);
 
         return CreatedAtAction(nameof(GetById), new{id = accountType.Id}, accountType);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update (int id, AccountType accountType){
+    public async Task<IActionResult> Update (int id, AccountType accountType){
         if(id != accountType.Id){
             return BadRequest();
         }
 
-        var accountTypeToUpdate = _service.GetById(id);
+        var accountTypeToUpdate = await _service.GetById(id);
         if(accountTypeToUpdate is not null){
-            _service.Update(id, accountType);
+            await _service.Update(id, accountType);
             return NoContent();
         }
         else{
-            return NotFound();
+            return AccountTypeNotFound(id);
         }
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id){
-        var typeToDelete = _service.GetById(id);
+    public async Task<IActionResult> Delete(int id){
+        var typeToDelete = await _service.GetById(id);
         if(typeToDelete is not null){
-            _service.Delete(id);
+            await _service.Delete(id);
             return Ok();
         }
         else{
-            return NotFound();
+            return AccountTypeNotFound(id);
         }
+    }
+
+      public NotFoundObjectResult AccountTypeNotFound(int id){
+        return NotFound(new{ message = $"El tipo de cuenta con ID = {id} no existe"});
     }
 }

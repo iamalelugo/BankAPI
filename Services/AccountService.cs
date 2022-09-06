@@ -1,6 +1,6 @@
 using BankAPI.Data;
 using BankAPI.DataBankModels;
-
+using Microsoft.EntityFrameworkCore;
 namespace BankAPI.Services;
 
 public class AccountService{
@@ -9,34 +9,34 @@ public class AccountService{
         _context = context;
     }
 
-    public IEnumerable<Account> GetAll(){
-        return _context.Accounts.ToList();
+    public async Task<IEnumerable<Account>> GetAll(){
+        return await _context.Accounts.ToListAsync();
     }
 
-    public Account? GetById(int id){
-        return _context.Accounts.Find(id);
+    public async Task<Account?> GetById(int id){
+        return await _context.Accounts.FindAsync(id);
     }
 
-    public Account Create(Account newAccount){
+    public async Task<Account> Create(Account newAccount){
         _context.Accounts.Add(newAccount);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return newAccount;
     }
 
-    public void Update(int id, Account account){
-        var existingAccount = GetById(id);
+    public async Task Update(int id, Account account){
+        var existingAccount = await GetById(id);
         if(existingAccount is not null){
             existingAccount.Balance = account.Balance;
             existingAccount.AccountType = account.AccountType;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 
-    public void Delete(int id){
-        var accountToDelete = GetById(id);
+    public async Task Delete(int id){
+        var accountToDelete = await GetById(id);
         if(accountToDelete is not null){
             _context.Remove(id);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

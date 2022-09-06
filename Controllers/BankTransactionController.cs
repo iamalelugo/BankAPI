@@ -9,58 +9,63 @@ namespace BankAPI.Controllers;
 [Route("controller")]
 public class BankTransactionController: ControllerBase{
     private readonly BankTransactionService _service;
+
     public BankTransactionController(BankTransactionService context){
         _service = context;
     }
 
     [HttpGet]
-    public IEnumerable<BankTransaction> Get(){
-        return _service.GetAll();
+    public async Task<IEnumerable<BankTransaction>> Get(){
+        return await _service.GetAll();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<BankTransaction> GetById(int id){
-        var transaction = _service.GetById(id);
+    public async Task<ActionResult<BankTransaction>> GetById(int id){
+        var transaction = await _service.GetById(id);
 
         if(transaction is not null){
             return transaction;
         }
         else{
-            return NotFound();
+            return BankTransactionNotFound(id);
         }
     }
 
     [HttpPost]
-    public IActionResult Create(BankTransaction transaction){
-        var newTransaction = _service.Create(transaction);
+    public async Task<IActionResult> Create(BankTransaction transaction){
+        var newTransaction = await _service.Create(transaction);
         return CreatedAtAction(nameof(GetById), new{id = newTransaction.Id}, transaction);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int Id, BankTransaction transaction){
-        if(Id != transaction.Id){
+    public async Task<IActionResult> Update(int id, BankTransaction transaction){
+        if(id != transaction.Id){
             return BadRequest();
         }
 
-        var existingTransaction = _service.GetById(Id);
+        var existingTransaction = await _service.GetById(id);
         if(existingTransaction is not null){
-            _service.Update(Id, transaction);
+            await _service.Update(id, transaction);
             return NoContent();
         }
         else{
-            return NotFound();
+            return BankTransactionNotFound(id);
         }
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id){
-        var transactionToDelete = _service.GetById(id);
+    public async Task<IActionResult> Delete(int id){
+        var transactionToDelete = await _service.GetById(id);
         if(transactionToDelete is not null){
-            _service.Delete(id);
+            await _service.Delete(id);
             return NoContent();
         }
         else{
-            return NotFound();
+            return BankTransactionNotFound(id);
         }
+    }
+
+    public NotFoundObjectResult BankTransactionNotFound(int id){
+        return NotFound(new{ message = $"La transaccion con ID = {id} no fue encontrada"});
     }
 }

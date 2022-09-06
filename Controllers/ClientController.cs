@@ -13,53 +13,56 @@ public class ClientController: ControllerBase{
     }
 
     [HttpGet]
-    public IEnumerable<Client> Get(){
-        return _service.GetAll();
+    public async Task<IEnumerable<Client>> Get(){
+        return await _service.GetAll();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Client> GetById(int id){
-        var client = _service.GetById(id);
+    public async Task<ActionResult<Client>> GetById(int id){
+        var client = await _service.GetById(id);
 
-        if(client is not null){
-            return client;
+        if(client is null){
+            return ClientNotFound(id);
         }
-        else{
-            return NotFound();
-        }
+        return client;
     }
+
     [HttpPost]
-    public IActionResult Create(Client client){
-        var newClient = _service.Create(client);
+    public async Task<IActionResult> Create(Client client){
+        var newClient = await _service.Create(client);
 
         return CreatedAtAction(nameof(GetById), new{ id = newClient.Id}, client);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Client client){
+    public async Task<IActionResult> Update(int id, Client client){
         if(id != client.Id){
             return BadRequest();
         }
-        var clientToUpdate = _service.GetById(id);
+        var clientToUpdate = await _service.GetById(id);
         if(clientToUpdate is not null){
-            _service.Update(id, client);
+            await _service.Update(id, client);
             return NoContent();
         }
         else{
-            return NotFound();
+            return ClientNotFound(id);
         }
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id){
-        var clientToDelete = _service.GetById(id);
+    public async Task<IActionResult> Delete(int id){
+        var clientToDelete = await _service.GetById(id);
 
         if(clientToDelete is not null){
-            _service.Delete(id);
+            await _service.Delete(id);
             return Ok();
         }
         else{
-            return NotFound();
+            return ClientNotFound(id);
         }
+    }
+
+    public NotFoundObjectResult ClientNotFound(int id){
+        return NotFound(new{ message = $"El cliente con ID = {id} no existe"});
     }
 }
