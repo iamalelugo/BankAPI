@@ -5,19 +5,19 @@ using BankAPI.DataBankModels;
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class TransactionTypeController: ControllerBase{
     private readonly TransactionTypeService _service;
     public TransactionTypeController(TransactionTypeService context){
         _service = context;
     }
 
-    [HttpGet]
+    [HttpGet("getall")]
     public async Task<IEnumerable<TransactionType>> Get(){
         return await _service.GetAll();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<TransactionType>> GetById(int id){
         var transactionType = await _service.GetById(id);
 
@@ -29,14 +29,14 @@ public class TransactionTypeController: ControllerBase{
         }
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create(TransactionType transactionType){
         var newTransactionType = await _service.Create(transactionType);
 
         return CreatedAtAction(nameof(GetById), new{id = transactionType.Id}, transactionType);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update{id}")]
     public async Task<IActionResult> Update(int id, TransactionType transactionType){
         if( id != transactionType.Id){
             return BadRequest();
@@ -52,7 +52,7 @@ public class TransactionTypeController: ControllerBase{
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(int id){
         var transactionTypeToDelete = await _service.GetById(id);
         if(transactionTypeToDelete is not null){

@@ -5,19 +5,19 @@ using BankAPI.DataBankModels;
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class AccountTypeController: ControllerBase{
     private readonly AccountTypeService _service;
     public AccountTypeController (AccountTypeService context){
         _service = context;
     }
 
-    [HttpGet]
+    [HttpGet("getall")]
     public async Task<IEnumerable<AccountType>> Get(){
         return await _service.GetAll();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<AccountType>> GetById(int id){
         var accountType = await _service.GetById(id);
 
@@ -29,14 +29,14 @@ public class AccountTypeController: ControllerBase{
         }
     }
 
-    [HttpPost]
+    [HttpPost("crate")]
     public async Task<IActionResult> Create(AccountType accountType){
         var newAccountType = await _service.Create(accountType);
 
         return CreatedAtAction(nameof(GetById), new{id = accountType.Id}, accountType);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update/{id}")]
     public async Task<IActionResult> Update (int id, AccountType accountType){
         if(id != accountType.Id){
             return BadRequest();
@@ -52,7 +52,7 @@ public class AccountTypeController: ControllerBase{
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(int id){
         var typeToDelete = await _service.GetById(id);
         if(typeToDelete is not null){

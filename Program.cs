@@ -19,6 +19,7 @@ builder.Services.AddScoped<BankTransactionService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<AccountTypeService>();
 builder.Services.AddScoped<TransactionTypeService>();
+builder.Services.AddScoped<LoginService>();
 
 var app = builder.Build();
 
