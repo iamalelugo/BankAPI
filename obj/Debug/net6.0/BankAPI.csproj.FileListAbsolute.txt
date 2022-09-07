@@ -59,3 +59,5 @@
 /Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/obj/Debug/net6.0/BankAPI.pdb
 /Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/obj/Debug/net6.0/BankAPI.genruntimeconfig.cache
 /Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/obj/Debug/net6.0/ref/BankAPI.dll
+/Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll

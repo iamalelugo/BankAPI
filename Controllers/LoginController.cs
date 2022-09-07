@@ -13,8 +13,10 @@ namespace BankAPI.Controllers;
 [Route("api/[controller]")]
 public class LoginController: ControllerBase{
     private readonly LoginService _loginservice;
-    public LoginController(LoginService context){
-        _loginservice = context;
+    private readonly IConfiguration config;
+    public LoginController(LoginService context, IConfiguration config){
+        this._loginservice = context;
+        this.config = config;
     }
 
     [HttpPost("authenticate")]
@@ -24,6 +26,26 @@ public class LoginController: ControllerBase{
         if(admin is null)
         return BadRequest(new{message = "Credenciales invalidas"});
 
-        return Ok(new { token = "Some value"});
+        string jwtToken = GenerateToken(admin);
+
+        return Ok(new { token = jwtToken});
+    }
+
+    private string GenerateToken(Administrator admin){
+        var claims = new []{
+            new Claim(ClaimTypes.Name, admin.Name),
+            new Claim(ClaimTypes.Email, admin.Email)
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JWT:Key").Value));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var securityToken = new JwtSecurityToken
+        (
+            claims: claims,
+            expires : DateTime.Now.AddMinutes(60),
+            signingCredentials : creds);
+
+        string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+        return token;
     }
 }

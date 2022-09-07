@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "jRtODD1ugS9qiQnPLBh++ZZvMrdgoYBps/u4Pl0wzgTzZJYS2sGltYnb+hMDlTzEwcPb6Ryyea6RvDePVBKL2A==",
+  "dgSpecHash": "xLcKiVA3lkaKXw3gOqb+VvCwcb/gaSxAt6jIehQbXgda5ofxiHM0YjJUGg0lUvRDdW0HwO+zf+pqXDZDG7cJdg==",
   "success": true,
   "projectFilePath": "/Users/alelugo/Desktop/CdisCapacitacion/CursoNet/BankAPI/BankAPI.csproj",
   "expectedPackageFiles": [
     "/Users/alelugo/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
+    "/Users/alelugo/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.8/microsoft.aspnetcore.authentication.jwtbearer.6.0.8.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.data.sqlclient/2.1.4/microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.data.sqlclient.sni.runtime/2.1.1/microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
@@ -28,8 +29,8 @@
     "/Users/alelugo/.nuget/packages/microsoft.identitymodel.abstractions/6.23.0/microsoft.identitymodel.abstractions.6.23.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.identitymodel.jsonwebtokens/6.23.0/microsoft.identitymodel.jsonwebtokens.6.23.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.identitymodel.logging/6.23.0/microsoft.identitymodel.logging.6.23.0.nupkg.sha512",
-    "/Users/alelugo/.nuget/packages/microsoft.identitymodel.protocols/6.8.0/microsoft.identitymodel.protocols.6.8.0.nupkg.sha512",
-    "/Users/alelugo/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.8.0/microsoft.identitymodel.protocols.openidconnect.6.8.0.nupkg.sha512",
+    "/Users/alelugo/.nuget/packages/microsoft.identitymodel.protocols/6.10.0/microsoft.identitymodel.protocols.6.10.0.nupkg.sha512",
+    "/Users/alelugo/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.10.0/microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.identitymodel.tokens/6.23.0/microsoft.identitymodel.tokens.6.23.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "/Users/alelugo/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",

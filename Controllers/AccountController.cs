@@ -3,9 +3,11 @@ using BankAPI.DataBankModels;
 using Microsoft.AspNetCore.Mvc;
 using BankApi.Data.DTOS.AccountDtoIn;
 using BankAPI.Data.DTOS.AccountDtoOut;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController: ControllerBase{
