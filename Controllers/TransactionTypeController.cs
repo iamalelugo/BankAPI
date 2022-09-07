@@ -5,7 +5,7 @@ using BankAPI.DataBankModels;
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("controller")]
+[Route("[controller]")]
 public class TransactionTypeController: ControllerBase{
     private readonly TransactionTypeService _service;
     public TransactionTypeController(TransactionTypeService context){

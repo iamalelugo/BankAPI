@@ -5,19 +5,19 @@ using BankAPI.DataBankModels;
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ClientController: ControllerBase{
     private readonly ClientService _service;
     public ClientController(ClientService context){
         _service = context;
     }
 
-    [HttpGet]
+    [HttpGet("getall")]
     public async Task<IEnumerable<Client>> Get(){
         return await _service.GetAll();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("get/{id}")]
     public async Task<ActionResult<Client>> GetById(int id){
         var client = await _service.GetById(id);
 
@@ -27,14 +27,14 @@ public class ClientController: ControllerBase{
         return client;
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create(Client client){
         var newClient = await _service.Create(client);
 
         return CreatedAtAction(nameof(GetById), new{ id = newClient.Id}, client);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update/{id}")]
     public async Task<IActionResult> Update(int id, Client client){
         if(id != client.Id){
             return BadRequest();
@@ -49,7 +49,7 @@ public class ClientController: ControllerBase{
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public async Task<IActionResult> Delete(int id){
         var clientToDelete = await _service.GetById(id);
 

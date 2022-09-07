@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace BankAPI.DataBankModels
 {
@@ -13,11 +11,9 @@ namespace BankAPI.DataBankModels
         }
 
         public int Id { get; set; }
-         [MaxLength (100, ErrorMessage = "El nombre debe ser mayor a 100 caracteres.")]
         public string Name { get; set; } = null!;
         public DateTime RegDate { get; set; }
 
-        [JsonIgnore]
         public virtual ICollection<BankTransaction> BankTransactions { get; set; }
     }
 }

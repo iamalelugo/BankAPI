@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.Services;
-using BankAPI.Data;
 using BankAPI.DataBankModels;
 
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("controller")]
+[Route("[controller]")]
 public class AccountTypeController: ControllerBase{
     private readonly AccountTypeService _service;
     public AccountTypeController (AccountTypeService context){

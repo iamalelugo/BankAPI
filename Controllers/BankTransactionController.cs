@@ -1,4 +1,3 @@
-using System.Transactions;
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.Services;
 using BankAPI.DataBankModels;
@@ -6,7 +5,7 @@ using BankAPI.DataBankModels;
 namespace BankAPI.Controllers;
 
 [ApiController]
-[Route("controller")]
+[Route("[controller]")]
 public class BankTransactionController: ControllerBase{
     private readonly BankTransactionService _service;
 

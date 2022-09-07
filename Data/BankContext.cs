@@ -19,6 +19,7 @@ namespace BankAPI.Data
 
         public virtual DbSet<Account> Accounts { get; set; } = null!;
         public virtual DbSet<AccountType> AccountTypes { get; set; } = null!;
+        public virtual DbSet<Administrator> Administrators { get; set; } = null!;
         public virtual DbSet<BankTransaction> BankTransactions { get; set; } = null!;
         public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<TransactionType> TransactionTypes { get; set; } = null!;
@@ -59,6 +60,37 @@ namespace BankAPI.Data
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RegDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<Administrator>(entity =>
+            {
+                entity.ToTable("Administrator");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.AdminType)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pwd)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RegDate)
